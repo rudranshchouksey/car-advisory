@@ -249,19 +249,46 @@ export default function Home() {
               </Card>
             )}
 
-            {/* AI Response */}
+           {/* AI Response Section */}
             {completion && (
-              <Card className="border-0 shadow-md bg-white overflow-hidden">
-                <div className="h-1 w-full bg-linear-to-r from-blue-500 via-violet-500 to-pink-500" />
-                <CardContent className="pt-6 pb-6">
-                  <div className="prose prose-sm max-w-none prose-headings:text-slate-800 prose-headings:font-bold prose-strong:text-slate-700 prose-li:text-slate-600">
-                    <ReactMarkdown>{completion}</ReactMarkdown>
-                  </div>
-                  {isLoading && (
-                    <span className="inline-block w-0.5 h-4 bg-blue-500 cursor-blink ml-0.5 align-middle" />
-                  )}
-                </CardContent>
-              </Card>
+              <div className="space-y-6 animate-fade-in-up">
+                {/* If you can't change the API to JSON, we polish the Markdown Container */}
+                <Card className="border-0 shadow-xl bg-white overflow-hidden rounded-3xl ring-1 ring-slate-200">
+                  <div className="h-2 w-full bg-linear-to-r from-blue-600 via-violet-500 to-cyan-400" />
+                  <CardContent className="pt-8 pb-8 px-8">
+                    <div className="prose prose-slate max-w-none 
+                      prose-headings:text-slate-900 prose-headings:font-bold 
+                      prose-p:text-slate-600 prose-p:leading-relaxed
+                      prose-strong:text-blue-700 prose-strong:font-bold
+                      prose-ul:list-none prose-ul:pl-0">
+                      
+                      {/* Customizing how Markdown looks to make it feel like "Cards" */}
+                      <ReactMarkdown
+                        components={{
+                          h3: ({node, ...props}) => (
+                            <h3 className="flex items-center gap-2 text-2xl mb-2 pt-4 border-t border-slate-100 first:border-0" {...props} />
+                          ),
+                          li: ({node, ...props}) => (
+                            <li className="inline-flex bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1 rounded-full mr-2 mb-2 border border-blue-100" {...props} />
+                          ),
+                          strong: ({node, ...props}) => (
+                            <span className="block text-xs uppercase tracking-widest text-slate-400 mt-4 mb-1" {...props} />
+                          )
+                        }}
+                      >
+                        {completion}
+                      </ReactMarkdown>
+                    </div>
+                    
+                    {isLoading && (
+                      <div className="flex items-center gap-2 mt-4 text-blue-600 font-medium">
+                        <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse" />
+                        <span className="text-sm">Generating deep insights...</span>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
             )}
 
             {/* Divider + Chat */}
