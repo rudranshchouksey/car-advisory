@@ -46,7 +46,7 @@ export default function ChatBox({ context }: Props) {
   const handleSend = (text: string) => {
     if (!text.trim() || isLoading) return;
     setShowSuggestions(false);
-    sendMessage(text.trim());
+    sendMessage({ text: text.trim() });
     setInput("");
   };
 
@@ -72,8 +72,8 @@ export default function ChatBox({ context }: Props) {
             </div>
           </div>
           <div className="px-3 py-1 rounded-full bg-blue-50 border border-blue-100 flex items-center gap-1.5">
-             <Zap size={12} className="text-blue-600 fill-blue-600" />
-             <span className="text-[10px] font-bold text-blue-700">AI PRO</span>
+            <Zap size={12} className="text-blue-600 fill-blue-600" />
+            <span className="text-[10px] font-bold text-blue-700">AI PRO</span>
           </div>
         </div>
       </CardHeader>
@@ -91,18 +91,16 @@ export default function ChatBox({ context }: Props) {
 
               return (
                 <div key={m.id} className={`flex gap-3 ${isUser ? "flex-row-reverse" : "flex-row"}`}>
-                  <div className={`w-8 h-8 rounded-lg shrink-0 flex items-center justify-center ${
-                    isUser ? "bg-slate-900 text-white" : "bg-blue-100 text-blue-600"
-                  }`}>
+                  <div className={`w-8 h-8 rounded-lg shrink-0 flex items-center justify-center ${isUser ? "bg-slate-900 text-white" : "bg-blue-100 text-blue-600"
+                    }`}>
                     {isUser ? <User size={14} /> : <Bot size={14} />}
                   </div>
-                  
+
                   <div className={`flex flex-col max-w-[80%] ${isUser ? "items-end" : "items-start"}`}>
-                    <div className={`rounded-2xl px-4 py-3 text-sm shadow-sm leading-relaxed ${
-                      isUser 
-                        ? "bg-blue-600 text-white rounded-tr-none" 
+                    <div className={`rounded-2xl px-4 py-3 text-sm shadow-sm leading-relaxed ${isUser
+                        ? "bg-blue-600 text-white rounded-tr-none"
                         : "bg-slate-100 text-slate-800 rounded-tl-none border border-slate-200"
-                    }`}>
+                      }`}>
                       <div className="prose prose-sm max-w-none prose-p:my-0 prose-invert">
                         <ReactMarkdown>{text}</ReactMarkdown>
                       </div>
